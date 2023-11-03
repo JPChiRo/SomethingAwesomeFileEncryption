@@ -67,11 +67,6 @@ def decrypt(fileName):
     with open(fileName, 'wb') as fileOut:
         fileOut.write(decryptedContent)
 
-    for line in open('dataVerification.txt', 'r'):
-        currLine = line.split("|")
-        if (re.match(currLine[0], fileName)):
-            del line
-            break
 
 
 def verification(fileName, code):
@@ -79,9 +74,10 @@ def verification(fileName, code):
     for line in open('dataVerification.txt', 'r'):
         currLine = line.strip()
         currLine = currLine.split("|")
-        if (re.match(currLine[0], fileName)):
+
+        if (re.fullmatch(f"{fileName}", currLine[0].strip())):
             getCode = currLine[1]
-            if (getCode == code):
+            if (getCode.strip() == code.strip()):
                 return True
             else:
                 return False
